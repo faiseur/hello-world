@@ -1,70 +1,90 @@
-<template>
- <div class="sidebar">
-    <el-menu
-      class="el-menu-vertical-demo"
-      router
-      :default-active="this.$router.path"
-      @open="handleOpen"
-      @close="handleClose"
-      background-color="#545c64"
-      text-color="#fff"
-      active-text-color="#ffd04b">
-      <el-submenu index="1">
-        <template slot="title">
-          <span>用户管理</span>
-        </template>
-        <el-menu-item index="/user/login">
-          <template slot="title">用户列表</template>
-        </el-menu-item>
-      </el-submenu>
-      <el-menu-item v-for="(item,i) in list" :key="i" :index="item.name">
-        {{ item.title }}
-      </el-menu-item>
-    </el-menu>
-</div>
-</template>
-
 <script>
-const list = [
-  {
-    name: '/login',
-    title: '登陆'
-  },
-  {
-    name: '/regist',
-    title: '注册'
-  }
-]
+import menuList from 'router/routes'
 
 
 export default {
-
   data () {
     return {
-      list
+      menuList: menuList[0].children,
+      indexActiv: this.$route.path,
+      isMenuShow: false
     }
   },
   methods: {
-      handleOpen(key,keyPath) {
-        alert(key,keyPath)
-        // this.$router.push('/user/login')
-      },
-      handleClose(key,keyPath) {
-        alert(key,keyPath)
-      }
+    renderItem (routerArr) {
+      return routerArr.map((routeObj) => {
+        const index = routeObj.path
+        const title = routeObj.meta.title
+        if (routeObj.children){
+          return <el-submenu index={index}>
+            <template slot="title">{title}</template>
+            {this.renderItem(routeObj.children)}
+          </el-submenu>
+        }else{
+          return <el-menu-item index={index} route={routeObj}>{title}</el-menu-item>
+        }
+      })
+    },
+    handleMenuLeave () {
+       this.isMenuShow = false
+    },
+    handleMenuBtnClick () {
+      this.isMenuShow = true
     }
+  },
+  render () {
+    const { indexActive,menuList,renderItem } = this
+    return <div class="menu" on-mouseleave={this.handleMenuLeave}>
+      <a class={['menu-btn', this.isMenuShow ? 'hide-menu' : '']} on-click={this.handleMenuBtnClick}>Open</a>
+      <el-menu defaultActive={indexActive} router={true} class={['el-menu', this.isMenuShow ? '' : 'hide-menu']} background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+         {renderItem(this.menuList)}
+      </el-menu>
+    </div>
+  }
 }
+
+
 </script>
 
 <style lang="less" scoped>
-  .sidebar {
-    width: 100%;
-    height: 100vh;
-    background: #000;
+.menu {
+  width: 40px;
+}
 
-    .el-menu-vertical-demo {
-      // height: 1000px;
-      width: 300px;
+.el-menu {
+    z-index: 1;
+    width: 300px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    text-align: center;
+    overflow: auto;
+    transition: 0.3s;
+
+    &.hide-menu {
+      transform: translateX(-300px);
     }
+}
+
+.menu-btn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: 0.3s;
+  display: block;
+  width: 40px;
+  height: 100vh;
+  cursor: pointer;
+  background-color: #545c64;
+  writing-mode: vertical-lr;
+  line-height: 40px;
+  text-align: center;
+  color: white;
+
+  &.hide-menu {
+  transform: translateX(-40px);
   }
+}
+   
 </style>
