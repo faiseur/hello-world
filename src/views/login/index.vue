@@ -44,8 +44,8 @@ export default {
           userName: this.userName,
           password: this.password
         }
-        axios.post(`http://192.168.222.218:18888/admin/user/getUser?userName=${this.userName}&password=${this.password}`)
-        // this.getUser(params)
+        // axios.post(`http://192.168.222.218:18888/admin/user/getUser?userName=${this.userName}&password=${this.password}`)
+        this.getUser(params)
         .then((res) => {
           window.localStorage.setItem('userName',this.userName);
           this.$router.push('/')
@@ -53,7 +53,6 @@ export default {
     },
       regist () {
         this.$router.push('regist')
-        console.log(123)
       }
   }
   

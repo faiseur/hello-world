@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <topBar />
+    <topBar class="top-bar" />
     <leftmenu />
     <div class="content">
       <router-view v-if="isValidPath"/>
@@ -41,7 +41,7 @@ export default {
   display: flex;
 }
 .content {
-  margin-top: 40px;
+  margin-top: 60px;
   width: 100%;
   flex: 1;
   height: 100vh;

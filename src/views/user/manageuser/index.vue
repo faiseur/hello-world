@@ -1,7 +1,7 @@
 <template>
   <div class="manageuser">
     <div class="header">
-      <el-input @keyup.enter.native="handleSearch()" clearable v-model="id" placeholder="请输入ID" class="item"></el-input>
+      <el-input @keyup.enter.native="handleSearch()" clearable v-model="sex" placeholder="请输入性别" class="item"></el-input>
       <el-input @keyup.enter.native="handleSearch()" v-model="userName" placeholder="请输入用户名" class="item"></el-input>
       <el-input @keyup.enter.native="handleSearch()" v-model="telephone" placeholder="请输入电话" class="item"></el-input>
       <el-button @click="handleSearch" type="primary">搜索</el-button>
@@ -10,6 +10,7 @@
     <div class="content">
       <el-table :data="dataList" style="width: 100%">
         <el-table-column  prop="id" label="ID" width="180"></el-table-column>
+        <el-table-column  prop="uuid" label="UUID" width="180"></el-table-column>
         <el-table-column prop="userName" label="姓名" width="180"></el-table-column>
         <el-table-column prop="sex" label="性别" width="180"></el-table-column>
         <el-table-column prop="telephone" label="电话"></el-table-column>
@@ -41,6 +42,7 @@ export default {
       input: '',
       dataList: [],
       id: this.id,
+      uuid: this.uuid,
       telephone: this.phone,
       userName: this.userName,
       sex: this.sex,
@@ -62,12 +64,14 @@ export default {
         pageSize: this.pageSize
       }
       params.id = this.id
+      params.uuid = this.uuid
       params.username = this.userName
       params.sex = this.sex
       params.telephone = this.telephone
       this.getUserList(params).then((res) => {
         if (res.data) {
           const { data: items , currentPage = 1 ,pageCount = 1,totalCount = 0} = res.data.data
+          this.currentPage = currentPage
           this.dataList = items
           this.pageCount = pageCount
           this.totalCount = totalCount
@@ -117,6 +121,9 @@ export default {
         width: 180px;
         margin-right: 20px;
       }
+    }
+    .content {
+      width: 100%;
     }
 
     .pagination {
