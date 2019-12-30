@@ -14,13 +14,15 @@ export default [
         },
         component: () => import('views/user'),
         children:
-        [{
-          path: '/user/manageuser',
-          meta: {
-            title: '用户管理'
-          },
-          component: () => import('views/user/manageuser')
-        }]
+        [
+          {
+            path: '/user/manageuser',
+            meta: {
+              title: '用户管理'
+            },
+            component: () => import('views/user/manageuser')
+          }
+        ]
       }
     ]
   },

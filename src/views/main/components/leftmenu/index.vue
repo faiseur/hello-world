@@ -52,7 +52,7 @@ export default {
 }
 
 .el-menu {
-    z-index: 1;
+    z-index: 2;
     width: 300px;
     position: absolute;
     top: 0;

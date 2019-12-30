@@ -33,7 +33,6 @@
 
 <script>
 import { getUserList } from '../../../api'
-// import axios from 'axios'
 
 
 export default {
@@ -77,7 +76,7 @@ export default {
           this.totalCount = totalCount
         }
       }).catch(err => {
-        // this.$message.error(err)
+        this.$message.error(err)
         })
     },
     // 改变每页条数

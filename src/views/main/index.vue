@@ -18,15 +18,15 @@ export default {
     'leftmenu': () => import('./components/leftmenu'),
     'topBar': () => import('./components/topBar')
   },
-  mounted () {
-    // 登录相关
-    const userName = window.localStorage['userName'] ? JSON.parse(window.localStorage['userName']) : null
-    const isLogin = !!userName
-    if (!isLogin) {
-      alert('请登录')
-      this.$router.push('login')
-    } 
-  },
+  // mounted () {
+  //   // 登录相关
+  //   const userName = window.localStorage['userName'] ? JSON.parse(window.localStorage['userName']) : null
+  //   const isLogin = !!userName
+  //   if (!isLogin) {
+  //     alert('请登录')
+  //     this.$router.push('/login')
+  //   } 
+  // },
   computed: {
     isValidPath () {
       const res = this.$route.path.match(/\/(?!$)/g)
